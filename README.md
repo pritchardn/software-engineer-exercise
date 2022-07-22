@@ -1,6 +1,6 @@
 # General instructions
 
-1. Fork this repository into your own github account.
+1. Fork or clone this repository into your own github account.
 1. All your work will be done in your repository.
 1. Inspect the code and understand what it's doing.
 1. When going through the steps below,
