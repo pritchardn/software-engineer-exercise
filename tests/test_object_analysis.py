@@ -105,3 +105,14 @@ class TestFarthest(TestCase):
         calculated_output = farthest(test_data)
         self.assertEqual(test_data[0], calculated_output)
 
+    def test_non_redshift_objects(self):
+        """
+        Asserts that a few objects containing no redshift field throws an error.
+        Handling a default 'smallest' is unreasonable
+        since redshift can be positive or negative (blue-shifted)
+        """
+        test_data = [
+            {"type": "nebula", "name": "crab"},
+            {"type": "galaxy", "name": "sombrero", "redshift": 0},
+        ]
+        self.assertRaises(KeyError, farthest, test_data)
