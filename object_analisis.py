@@ -2,17 +2,10 @@ from collections import defaultdict
 
 
 def aboundant(objects):
-    expected_types = {'star', 'galaxy', 'nebula', 'supernova', 'frb'}
-    expected_plurals = {'star': 'stars', 'galaxy': 'galaxies', 'nebula': 'nebulae', 'supernova': 'supernovae', 'frb': 'frbs'}
     type_counts = defaultdict(int)
     for o in objects:
         type_counts[o['type']] += 1
-    abundant_type = max(type_counts, key=lambda x: type_counts[x])
-    if abundant_type in expected_types:
-        return expected_plurals[abundant_type]
-    else:
-        raise ValueError("Object list contains a large number of unidentified objects")
-
+    return max(type_counts, key=lambda x: type_counts[x])
 
 input = """
 [

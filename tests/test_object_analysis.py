@@ -47,7 +47,7 @@ class TestAboundant(TestCase):
             }
         ]
         output_calculated = aboundant(test_data)
-        self.assertEqual("frbs", output_calculated)
+        self.assertEqual("frb", output_calculated)
 
     def test_max_nebulae(self):
         """
@@ -65,22 +65,4 @@ class TestAboundant(TestCase):
             }
         ]
         output_calculated = aboundant(test_data)
-        self.assertEqual("nebulae", output_calculated)
-
-    def test_unsupported(self):
-        """
-        If given a list of objected containing unexpected object types, the function should throw
-        an error
-        """
-        test_data = [
-            {
-                "type": "alien",
-            },
-            {
-                "type": "alien",
-            },
-            {
-                "type": "frb",
-            }
-        ]
-        self.assertRaises(ValueError, aboundant, test_data)
+        self.assertEqual("nebula", output_calculated)
