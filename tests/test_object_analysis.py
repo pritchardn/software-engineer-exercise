@@ -5,6 +5,7 @@ Tests the functions in object_analysis.py for correctness.
 from unittest import TestCase
 
 from object_analysis import most_common_type, farthest
+from known_types import known_types_plurals
 
 
 class TestMostCommonType(TestCase):
@@ -12,29 +13,20 @@ class TestMostCommonType(TestCase):
     Tests the abundant function for correctness
     """
 
-    def test_max_frbs(self):
+    def _test_max_object(self, target: str, expected: str):
         """
-        Asserts that a list of objects mostly containing frbs will return 'frbs'
+        Constructs and tests that a list of objects with a single majority will return its expected
+        plural.
         """
-        test_data = [
-            {"type": "star"},
-            {"type": "frb"},
-            {"type": "frb"},
-        ]
-        output_calculated = most_common_type(test_data)
-        self.assertEqual("frb", output_calculated)
+        test_data = [{"type": target}] * 2 + [{"type": "other"}]
+        self.assertEqual(expected, most_common_type(test_data))
 
-    def test_max_nebulae(self):
+    def test_max_types(self):
         """
-        Asserts that a list of objects mostly containing nebulae will return 'nebulae
+        Asserts the most frequent object is found where each known type is the most frequent
         """
-        test_data = [
-            {"type": "nebula"},
-            {"type": "nebula"},
-            {"type": "frb"},
-        ]
-        output_calculated = most_common_type(test_data)
-        self.assertEqual("nebula", output_calculated)
+        for object_type, plural in known_types_plurals.items():
+            self._test_max_object(object_type, plural)
 
     def test_equal_frequency(self):
         """
@@ -46,7 +38,18 @@ class TestMostCommonType(TestCase):
             {"type": "frb"},
         ]
         output_calculated = most_common_type(test_data)
-        self.assertEqual("nebula", output_calculated)
+        self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
+
+    def test_non_valid_type(self):
+        """
+        Asserts that a list of objects, where one does not contain a valid 'type', is ignored.
+        """
+        test_data = [
+            {"type": "ufo"},
+            {"type": "galaxy"}
+        ]
+        output_calulated = most_common_type(test_data)
+        self.assertEqual(known_types_plurals["galaxy"], output_calulated)
 
     def test_non_type_objects(self):
         """
@@ -58,7 +61,7 @@ class TestMostCommonType(TestCase):
             {"type": "frb"},
         ]
         output_calculated = most_common_type(test_data)
-        self.assertEqual("frb", output_calculated)
+        self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
 
     def test_all_non_type_objects(self):
         """
