@@ -52,6 +52,9 @@ This function is, in essence, calculating the most frequent field entry in a lis
 - The final comparison routine is effectively sorting a list of `sum_x` variables, which can be 
 handled as an explicit sort of mapped counts. This incidentally allows the function to become more 
 general
+- To keep compatibility with the original code outputs, the function contains a list of expected 
+types and their corresponding plural forms. If the objects argument contains a maximal number of 
+unexpected objects, an appropriate error is raised (this is also tested).
 - Further optimisation could include changing the data structure a struct-of-arrays rather than
 array-of-structs style, but that either changes the expected input (which I will for now assume is
 not expected) or result in one additional pass through the data, which defeats the purpose of the

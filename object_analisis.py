@@ -1,34 +1,18 @@
+from collections import defaultdict
+
+
 def aboundant(objects):
-    sum_stars = 0
-    sum_galaxies = 0
-    sum_supernovae = 0
-    sum_frbs = 0
-    sum_nebulae = 0
+    expected_types = {'star', 'galaxy', 'nebula', 'supernova', 'frb'}
+    expected_plurals = {'star': 'stars', 'galaxy': 'galaxies', 'nebula': 'nebulae', 'supernova': 'supernovae', 'frb': 'frbs'}
+    type_counts = defaultdict(int)
     for o in objects:
-        if o['type'] == 'star':
-            sum_stars += 1
-    for o in objects:
-        if o['type'] == 'galaxy':
-            sum_galaxies += 1
-    for o in objects:
-        if o['type'] == 'supernovae':
-            sum_supernovae += 1
-    for o in objects:
-        if o['type'] == 'frb':
-            sum_frbs += 1
-    for o in objects:
-        if o['type'] == 'nebula':
-            sum_nebulae += 1
-    if sum_stars >= sum_galaxies and sum_stars >= sum_supernovae and sum_stars >= sum_frbs and sum_stars >= sum_nebulae:
-        return 'stars'
-    if sum_galaxies >= sum_stars and sum_galaxies >= sum_supernovae and sum_galaxies >= sum_frbs and sum_galaxies >= sum_nebulae:
-        return 'galaxies'
-    if sum_supernovae >= sum_stars and sum_supernovae >= sum_galaxies and sum_supernovae >= sum_frbs and sum_supernovae >= sum_nebulae:
-        return 'supernovae'
-    if sum_frbs >= sum_stars and sum_frbs >= sum_galaxies and sum_frbs >= sum_supernovae and sum_frbs >= sum_nebulae:
-        return 'frbs'
-    if sum_nebulae >= sum_stars and sum_nebulae >= sum_galaxies and sum_nebulae >= sum_supernovae and sum_nebulae >= sum_frbs:
-        return 'nebulae'
+        type_counts[o['type']] += 1
+    abundant_type = max(type_counts, key=lambda x: type_counts[x])
+    if abundant_type in expected_types:
+        return expected_plurals[abundant_type]
+    else:
+        raise ValueError("Object list contains a large number of unidentified objects")
+
 
 input = """
 [
@@ -55,12 +39,6 @@ print(aboundant(json.loads(input)))
 
 
 def farthest(objects):
-    highest_redshift = None
-    for o in objects:
-        if highest_redshift is None or o["redshift"] > highest_redshift:
-            highest_redshift = o["redshift"]
-    for o in objects:
-        if o["redshift"] == highest_redshift:
-            return o
+    return max(objects, key=lambda x: x["redshift"])
 
 print(farthest(json.loads(input)))
