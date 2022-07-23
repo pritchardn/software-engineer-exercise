@@ -45,7 +45,7 @@ routine or time-sensitive function, absolutely, otherwise perhaps not:
    1. For these examples, I will assume that a linear time approach is enough with few constant 
    factors
 
-## Improving Aboundant
+## Improving most_common_type
 This function is, in essence, calculating the most frequent field entry in a list of dictionaries 
 - It loops through the entire list of objects for each type of object considered
   - This can be collapsed into a single pass through the objects 
@@ -62,8 +62,26 @@ optimisation in the first place.
 
 ## Improving Farthest
 This function returns the fist object in a list with the largest "redshift" value.
-- Similar to Aboundant, the original code loops thorugh the objects twice, once to compute / locate
+- Similar to most_common_type, the original code loops thorugh the objects twice, once to compute / locate
 the maxium and a second to find it again
   - This can easily be merged into a single pass through the data structure
-- Also similar to aboundant, a struct-of-arrays style would remove the dictionary lookups for each
-comparison, but without changing input signature, that would be redundant.
+- Also similar to most_common_type, a struct-of-arrays style would remove the dictionary lookups for each
+comparison, but withot changing input signature, that would be redundant.
+
+# A Note on improving readability
+- Changing the expected outputs of a function is usually something that needs discussing before 
+implementation, if the original intention was to only consider 'valid' object types and return their
+plural form if most abundant, I would modify `most_common_type` as follows:
+```python
+def most_common_type(objects, expected_types: set, expected_plurals: dict):
+    type_counts = defaultdict(int)
+    for o in objects:
+        type_counts[o['type']] += 1
+    abundant_type = max(type_counts, key=lambda x: type_counts[x])
+    if abundant_type in expected_types:
+        return expected_plurals[abundant_type]
+    else:
+        raise ValueError("Object list contains a large number of unidentified objects")
+```
+Which is more in line with my original changes, but dropping this requirement makes for a much
+simpler, generalised and ultimately readable function.

@@ -1,11 +1,12 @@
 from collections import defaultdict
 
 
-def aboundant(objects):
+def most_common_type(objects: list) -> str:
     type_counts = defaultdict(int)
     for o in objects:
         type_counts[o['type']] += 1
     return max(type_counts, key=lambda x: type_counts[x])
+
 
 input = """
 [
@@ -28,10 +29,12 @@ input = """
 """
 
 import json
-print(aboundant(json.loads(input)))
+
+print(most_common_type(json.loads(input)))
 
 
-def farthest(objects):
+def farthest(objects: list) -> dict:
     return max(objects, key=lambda x: x["redshift"])
+
 
 print(farthest(json.loads(input)))

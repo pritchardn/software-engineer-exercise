@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from object_analisis import aboundant, farthest
+from object_analisis import most_common_type, farthest
 
 
 class TestFarthest(TestCase):
@@ -30,7 +30,7 @@ class TestFarthest(TestCase):
         self.assertEqual(maximum_redshift_object, calculated_output)
 
 
-class TestAboundant(TestCase):
+class TestMostCommonType(TestCase):
     def test_max_frbs(self):
         """
         Asserts that a list of objects mostly containing frbs will return 'frbs'
@@ -46,7 +46,7 @@ class TestAboundant(TestCase):
                 "type": "frb",
             }
         ]
-        output_calculated = aboundant(test_data)
+        output_calculated = most_common_type(test_data)
         self.assertEqual("frb", output_calculated)
 
     def test_max_nebulae(self):
@@ -64,5 +64,5 @@ class TestAboundant(TestCase):
                 "type": "frb",
             }
         ]
-        output_calculated = aboundant(test_data)
+        output_calculated = most_common_type(test_data)
         self.assertEqual("nebula", output_calculated)
