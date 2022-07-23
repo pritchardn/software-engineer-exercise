@@ -21,7 +21,7 @@ class TestMostCommonType(TestCase):
         test_data = [{"type": target}] * 2 + [{"type": "other"}]
         self.assertEqual(expected, most_common_type(test_data))
 
-    def test_max_types(self):
+    def test_all_types(self):
         """
         Asserts the most frequent object is found where each known type is the most frequent
         """
@@ -33,16 +33,14 @@ class TestMostCommonType(TestCase):
         Asserts that in the case of a tie, the first object type encountered is returned
         """
         test_data = [{"type": object_type} for object_type in KNOWN_TYPES_PLURALS]
-        output_calculated = most_common_type(test_data)
-        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], output_calculated)
+        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], most_common_type(test_data))
 
     def test_non_valid_type(self):
         """
         Asserts that a list of objects, where one does not contain a valid 'type', is ignored.
         """
         test_data = [{"type": "ufo"}, {"type": "galaxy"}]
-        output_calulated = most_common_type(test_data)
-        self.assertEqual(KNOWN_TYPES_PLURALS["galaxy"], output_calulated)
+        self.assertEqual(KNOWN_TYPES_PLURALS["galaxy"], most_common_type(test_data))
 
     def test_non_type_objects(self):
         """
@@ -53,16 +51,14 @@ class TestMostCommonType(TestCase):
             {"other_field": "baseball"},
             {"type": "frb"},
         ]
-        output_calculated = most_common_type(test_data)
-        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], output_calculated)
+        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], most_common_type(test_data))
 
     def test_empty(self):
         """
         Asserts that an empty list of objects returns ""
         """
         test_data = []
-        output_calculdated = most_common_type(test_data)
-        self.assertEqual("", output_calculdated)
+        self.assertEqual("", most_common_type(test_data))
 
     def test_all_non_type_objects(self):
         """
@@ -73,8 +69,7 @@ class TestMostCommonType(TestCase):
             {"other_field": "baseball"},
             {"other_field": "football"},
         ]
-        output_calculated = most_common_type(test_data)
-        self.assertEqual("", output_calculated)
+        self.assertEqual("", most_common_type(test_data))
 
 
 class TestMaxRedShifted(TestCase):
@@ -96,8 +91,7 @@ class TestMaxRedShifted(TestCase):
             {"type": "nebula", "name": "crab", "redshift": 5},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        calculated_output = most_redshifted(test_data)
-        self.assertEqual(maximum_redshift_object, calculated_output)
+        self.assertEqual(maximum_redshift_object, most_redshifted(test_data))
 
     def test_equal(self):
         """
@@ -107,8 +101,7 @@ class TestMaxRedShifted(TestCase):
             {"type": "nebula", "name": "crab", "redshift": 0},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        calculated_output = most_redshifted(test_data)
-        self.assertEqual(test_data[0], calculated_output)
+        self.assertEqual(test_data[0], most_redshifted(test_data))
 
     def test_some_non_redshift_objects(self):
         """
@@ -120,8 +113,7 @@ class TestMaxRedShifted(TestCase):
             {"type": "nebula", "name": "crab"},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        calculated_output = most_redshifted(test_data)
-        self.assertEqual(test_data[1], calculated_output)
+        self.assertEqual(test_data[1], most_redshifted(test_data))
 
     def test_all_non_redshift(self):
         """
@@ -132,13 +124,11 @@ class TestMaxRedShifted(TestCase):
             {"type": "nebula", "name": "crab"},
             {"type": "galaxy", "name": "sombrero"},
         ]
-        calculated_output = most_redshifted(test_data)
-        self.assertEqual(None, calculated_output)
+        self.assertEqual(None, most_redshifted(test_data))
 
     def test_empty(self):
         """
         Asserts that when given an empty list a None type is returned
         """
         test_data = []
-        calculated_output = most_redshifted(test_data)
-        self.assertEqual(None, calculated_output)
+        self.assertEqual(None, most_redshifted(test_data))
