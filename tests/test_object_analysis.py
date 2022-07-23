@@ -36,6 +36,18 @@ class TestMostCommonType(TestCase):
         output_calculated = most_common_type(test_data)
         self.assertEqual("nebula", output_calculated)
 
+    def test_equal_frequency(self):
+        """
+        Asserts that in the case of a tie, the first object type encountered is returned
+        """
+        test_data = [
+            {"type": "nebula"},
+            {"type": "star"},
+            {"type": "frb"},
+        ]
+        output_calculated = most_common_type(test_data)
+        self.assertEqual("nebula", output_calculated)
+
 
 class TestFarthest(TestCase):
     """
@@ -58,3 +70,15 @@ class TestFarthest(TestCase):
         ]
         calculated_output = farthest(test_data)
         self.assertEqual(maximum_redshift_object, calculated_output)
+
+    def test_farthest_equal(self):
+        """
+        Tests that in the case of a tie, the first object in the list is returned.
+        """
+        test_data = [
+            {"type": "nebula", "name": "crab", "redshift": 0},
+            {"type": "galaxy", "name": "sombrero", "redshift": 0},
+        ]
+        calculated_output = farthest(test_data)
+        self.assertEqual(test_data[0], calculated_output)
+
