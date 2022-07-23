@@ -7,29 +7,6 @@ from unittest import TestCase
 from object_analysis import most_common_type, farthest
 
 
-class TestFarthest(TestCase):
-    """
-    Tests the farthest function for correctness.
-    """
-
-    def test_farthest(self):
-        """
-        Asserts that farthest returns the object with the single maximum redshift value
-        """
-        maximum_redshift_object = {
-            "type": "star",
-            "name": "alpha-centaurus",
-            "redshift": 100,
-        }
-        test_data = [
-            maximum_redshift_object,
-            {"type": "nebula", "name": "crab", "redshift": 5},
-            {"type": "galaxy", "name": "sombrero", "redshift": 0},
-        ]
-        calculated_output = farthest(test_data)
-        self.assertEqual(maximum_redshift_object, calculated_output)
-
-
 class TestMostCommonType(TestCase):
     """
     Tests the abundant function for correctness
@@ -58,3 +35,26 @@ class TestMostCommonType(TestCase):
         ]
         output_calculated = most_common_type(test_data)
         self.assertEqual("nebula", output_calculated)
+
+
+class TestFarthest(TestCase):
+    """
+    Tests the farthest function for correctness.
+    """
+
+    def test_farthest(self):
+        """
+        Asserts that farthest returns the object with the single maximum redshift value
+        """
+        maximum_redshift_object = {
+            "type": "star",
+            "name": "alpha-centaurus",
+            "redshift": 100,
+        }
+        test_data = [
+            maximum_redshift_object,
+            {"type": "nebula", "name": "crab", "redshift": 5},
+            {"type": "galaxy", "name": "sombrero", "redshift": 0},
+        ]
+        calculated_output = farthest(test_data)
+        self.assertEqual(maximum_redshift_object, calculated_output)
