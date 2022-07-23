@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from object_analisis import most_common_type, farthest
+from object_analysis import most_common_type, farthest
 
 
 class TestFarthest(TestCase):
