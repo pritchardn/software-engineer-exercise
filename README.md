@@ -31,3 +31,36 @@
 1. Create a GitHub Action (or any other CI script)
    that runs automatic tasks after each commit.
    Add the tasks you think are relevant.
+
+# Increasing Performance
+How to assess what should be improved:
+1. Reasoning about algorithmic complexity for 'low-hanging fruit':
+   1. How many loops are being conducted? Could they be merged?
+   2. How often is data being read/written? Could operations be merged?
+   3. Is there a more efficient algorithm to tackle the task at hand?
+   4. Are there more efficient data-structured to provide the type of access required?
+2. After making straightforward algorithmic improvements, consider measuring code performance
+depending on how often this code will be used; if frequently, on large volumes of data, as a core 
+routine or time-sensitive function, absolutely, otherwise perhaps not:
+   1. For these examples, I will assume that a linear time approach is enough with few constant 
+   factors
+
+## Improving Aboundant
+This function is, in essence, calculating the most frequent field entry in a list of dictionaries 
+- It loops through the entire list of objects for each type of object considered
+  - This can be collapsed into a single pass through the objects 
+- The final comparison routine is effectively sorting a list of `sum_x` variables, which can be 
+handled as an explicit sort of mapped counts. This incidentally allows the function to become more 
+general
+- Further optimisation could include changing the data structure a struct-of-arrays rather than
+array-of-structs style, but that either changes the expected input (which I will for now assume is
+not expected) or result in one additional pass through the data, which defeats the purpose of the
+optimisation in the first place.
+
+## Improving Farthest
+This function returns the fist object in a list with the largest "redshift" value.
+- Similar to Aboundant, the original code loops thorugh the objects twice, once to compute / locate
+the maxium and a second to find it again
+  - This can easily be merged into a single pass through the data structure
+- Also similar to aboundant, a struct-of-arrays style would remove the dictionary lookups for each
+comparison, but without changing input signature, that would be redundant.
