@@ -48,6 +48,29 @@ class TestMostCommonType(TestCase):
         output_calculated = most_common_type(test_data)
         self.assertEqual("nebula", output_calculated)
 
+    def test_non_type_objects(self):
+        """
+        Asserts that having an object with no type is gracefully skipped
+        """
+        test_data = [
+            {"type": "frb"},
+            {"other_field": "baseball"},
+            {"type": "frb"},
+        ]
+        output_calculated = most_common_type(test_data)
+        self.assertEqual("frb", output_calculated)
+
+    def test_all_non_type_objects(self):
+        """
+        Asserts that an object list where none of them have 'type' fields raises an exception
+        """
+        test_data = [
+            {"other_field": "basketball"},
+            {"other_field": "baseball"},
+            {"other_field": "football"},
+        ]
+        self.assertRaises(ValueError, most_common_type, test_data)
+
 
 class TestFarthest(TestCase):
     """

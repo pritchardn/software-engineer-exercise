@@ -15,7 +15,8 @@ def most_common_type(object_list: list) -> str:
     """
     type_counts = defaultdict(int)
     for entry in object_list:
-        type_counts[entry["type"]] += 1
+        if "type" in entry:
+            type_counts[entry["type"]] += 1
     return max(type_counts, key=lambda x: type_counts[x])
 
 
