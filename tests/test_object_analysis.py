@@ -44,10 +44,7 @@ class TestMostCommonType(TestCase):
         """
         Asserts that a list of objects, where one does not contain a valid 'type', is ignored.
         """
-        test_data = [
-            {"type": "ufo"},
-            {"type": "galaxy"}
-        ]
+        test_data = [{"type": "ufo"}, {"type": "galaxy"}]
         output_calulated = most_common_type(test_data)
         self.assertEqual(known_types_plurals["galaxy"], output_calulated)
 
