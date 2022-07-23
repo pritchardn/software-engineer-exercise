@@ -5,7 +5,7 @@ Tests the functions in object_analysis.py for correctness.
 from unittest import TestCase
 
 from object_analysis import most_common_type, most_redshifted
-from known_types import known_types_plurals
+from known_types import KNOWN_TYPES_PLURALS
 
 
 class TestMostCommonType(TestCase):
@@ -25,16 +25,16 @@ class TestMostCommonType(TestCase):
         """
         Asserts the most frequent object is found where each known type is the most frequent
         """
-        for object_type, plural in known_types_plurals.items():
+        for object_type, plural in KNOWN_TYPES_PLURALS.items():
             self._test_max_object(object_type, plural)
 
     def test_equal_frequency(self):
         """
         Asserts that in the case of a tie, the first object type encountered is returned
         """
-        test_data = [{"type": object_type} for object_type in known_types_plurals]
+        test_data = [{"type": object_type} for object_type in KNOWN_TYPES_PLURALS]
         output_calculated = most_common_type(test_data)
-        self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
+        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], output_calculated)
 
     def test_non_valid_type(self):
         """
@@ -42,7 +42,7 @@ class TestMostCommonType(TestCase):
         """
         test_data = [{"type": "ufo"}, {"type": "galaxy"}]
         output_calulated = most_common_type(test_data)
-        self.assertEqual(known_types_plurals["galaxy"], output_calulated)
+        self.assertEqual(KNOWN_TYPES_PLURALS["galaxy"], output_calulated)
 
     def test_non_type_objects(self):
         """
@@ -54,7 +54,7 @@ class TestMostCommonType(TestCase):
             {"type": "frb"},
         ]
         output_calculated = most_common_type(test_data)
-        self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
+        self.assertEqual(KNOWN_TYPES_PLURALS[test_data[0]["type"]], output_calculated)
 
     def test_empty(self):
         """

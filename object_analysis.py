@@ -4,7 +4,7 @@ object dictionaries
 """
 
 from collections import defaultdict
-from known_types import known_types_plurals
+from known_types import KNOWN_TYPES_PLURALS
 
 
 def most_common_type(object_list: list) -> str:
@@ -16,12 +16,12 @@ def most_common_type(object_list: list) -> str:
     """
     type_counts = defaultdict(int)
     for entry in object_list:
-        if "type" in entry and entry.get("type", "") in known_types_plurals:
+        if "type" in entry and entry.get("type", "") in KNOWN_TYPES_PLURALS:
             type_counts[entry["type"]] += 1
     if len(type_counts) == 0:
         return ""
     most_frequent_type = max(type_counts, key=lambda x: type_counts[x])
-    return known_types_plurals[most_frequent_type]
+    return KNOWN_TYPES_PLURALS[most_frequent_type]
 
 
 def most_redshifted(object_list: list) -> dict:

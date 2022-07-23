@@ -4,7 +4,7 @@ Defining this separately means editing this object changes the behaviour of the 
 and the unittests simultaneously.
 """
 
-known_types_plurals = {
+KNOWN_TYPES_PLURALS = {
     "star": "stars",
     "galaxy": "galaxies",
     "supernova": "supernovae",
