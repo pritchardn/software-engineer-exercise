@@ -24,10 +24,18 @@ def most_common_type(object_list: list) -> str:
     return known_types_plurals[most_frequent_type]
 
 
-def farthest(objects: list) -> dict:
+def most_redshifted(object_list: list) -> dict:
     """
     Finds the object with the largest 'redshift' value in a list of objects.
-    :param objects: A list of objects. All are assumed to contain a 'redshift' field.
+    :param object_list: A list of objects. All are assumed to contain a 'redshift' field.
     :return: The first object with the largest redshift value.
     """
-    return max(objects, key=lambda x: x["redshift"])
+    furthest_object = None
+    for entry in object_list:
+        if "redshift" in entry:
+            if (
+                furthest_object is None
+                or entry["redshift"] > furthest_object.get("redshift", None)
+            ):
+                furthest_object = entry
+    return furthest_object

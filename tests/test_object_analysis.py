@@ -4,7 +4,7 @@ Tests the functions in object_analysis.py for correctness.
 
 from unittest import TestCase
 
-from object_analysis import most_common_type, farthest
+from object_analysis import most_common_type, most_redshifted
 from known_types import known_types_plurals
 
 
@@ -32,11 +32,7 @@ class TestMostCommonType(TestCase):
         """
         Asserts that in the case of a tie, the first object type encountered is returned
         """
-        test_data = [
-            {"type": "nebula"},
-            {"type": "star"},
-            {"type": "frb"},
-        ]
+        test_data = [{"type": object_type} for object_type in known_types_plurals]
         output_calculated = most_common_type(test_data)
         self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
 
@@ -60,6 +56,14 @@ class TestMostCommonType(TestCase):
         output_calculated = most_common_type(test_data)
         self.assertEqual(known_types_plurals[test_data[0]["type"]], output_calculated)
 
+    def test_empty(self):
+        """
+        Asserts that an empty list of objects returns ""
+        """
+        test_data = []
+        output_calculdated = most_common_type(test_data)
+        self.assertEqual("", output_calculdated)
+
     def test_all_non_type_objects(self):
         """
         Asserts that an object list where none of them have 'type' fields raises an exception
@@ -73,12 +77,12 @@ class TestMostCommonType(TestCase):
         self.assertEqual("", output_calculated)
 
 
-class TestFarthest(TestCase):
+class TestMaxRedShifted(TestCase):
     """
     Tests the farthest function for correctness.
     """
 
-    def test_farthest(self):
+    def test_basic_case(self):
         """
         Asserts that farthest returns the object with the single maximum redshift value
         """
@@ -92,10 +96,10 @@ class TestFarthest(TestCase):
             {"type": "nebula", "name": "crab", "redshift": 5},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        calculated_output = farthest(test_data)
+        calculated_output = most_redshifted(test_data)
         self.assertEqual(maximum_redshift_object, calculated_output)
 
-    def test_farthest_equal(self):
+    def test_equal(self):
         """
         Tests that in the case of a tie, the first object in the list is returned.
         """
@@ -103,10 +107,10 @@ class TestFarthest(TestCase):
             {"type": "nebula", "name": "crab", "redshift": 0},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        calculated_output = farthest(test_data)
+        calculated_output = most_redshifted(test_data)
         self.assertEqual(test_data[0], calculated_output)
 
-    def test_non_redshift_objects(self):
+    def test_some_non_redshift_objects(self):
         """
         Asserts that a few objects containing no redshift field throws an error.
         Handling a default 'smallest' is unreasonable
@@ -116,4 +120,25 @@ class TestFarthest(TestCase):
             {"type": "nebula", "name": "crab"},
             {"type": "galaxy", "name": "sombrero", "redshift": 0},
         ]
-        self.assertRaises(KeyError, farthest, test_data)
+        calculated_output = most_redshifted(test_data)
+        self.assertEqual(test_data[1], calculated_output)
+
+    def test_all_non_redshift(self):
+        """
+        Asserts that when provided a list of objects, none of which have a redshift value,
+        None is returned
+        """
+        test_data = [
+            {"type": "nebula", "name": "crab"},
+            {"type": "galaxy", "name": "sombrero"},
+        ]
+        calculated_output = most_redshifted(test_data)
+        self.assertEqual(None, calculated_output)
+
+    def test_empty(self):
+        """
+        Asserts that when given an empty list a None type is returned
+        """
+        test_data = []
+        calculated_output = most_redshifted(test_data)
+        self.assertEqual(None, calculated_output)

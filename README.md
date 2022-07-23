@@ -60,7 +60,7 @@ array-of-structs style, but that either changes the expected input (which I will
 not expected) or result in one additional pass through the data, which defeats the purpose of the
 optimisation in the first place.
 
-## Improving Farthest
+## Improving most_redshifted
 This function returns the fist object in a list with the largest "redshift" value.
 - Similar to most_common_type, the original code loops thorugh the objects twice, once to compute / locate
 the maxium and a second to find it again
