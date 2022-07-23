@@ -32,10 +32,9 @@ def most_redshifted(object_list: list) -> dict:
     """
     furthest_object = None
     for entry in object_list:
-        if "redshift" in entry:
-            if (
-                furthest_object is None
-                or entry["redshift"] > furthest_object.get("redshift", None)
-            ):
-                furthest_object = entry
+        if "redshift" in entry and (
+            furthest_object is None
+            or entry["redshift"] > furthest_object.get("redshift", None)
+        ):
+            furthest_object = entry
     return furthest_object
