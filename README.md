@@ -85,3 +85,7 @@ def most_common_type(objects, expected_types: set, expected_plurals: dict):
 ```
 Which is more in line with my original changes, but dropping this requirement makes for a much
 simpler, generalised and ultimately readable function.
+
+- The `restricted_types` branch contains yet another implementation that adds a more static list of known-objects, keeping the original expectation of several known types to be checked against. This branch also contains some more programmatic unit tests as a result.
+- If nebula were not meant to be considered, please ignore my addition of this object type. This would be picked up in discussion I'm sure
+- Finally, if the ordering of tie-broken priorities in the original implmentation was intentional, my apologies, this could also be dealt with. Even considering returning a list of most abundant objects in such a case could make sense.
