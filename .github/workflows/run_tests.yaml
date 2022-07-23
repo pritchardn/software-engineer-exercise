@@ -1,0 +1,32 @@
+name: Run unit tests
+
+on: [push, pull_request]
+
+jobs:
+
+  run_tests:
+    name: Run unit tests with python ${{matrix.python-version}} - ${{ matrix.desc }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - python-version: '3.8'
+            test_number: 0
+          - python-version: '3.9'
+            test_number: 1
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install test dependencies
+        run: |
+          pip install -U unittest
+
+      - name: Run object_analysis tests
+        if: ${{ matrix.translator == 'yes' }}
+        run: python -m unittest
