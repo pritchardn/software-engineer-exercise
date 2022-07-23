@@ -69,7 +69,8 @@ class TestMostCommonType(TestCase):
             {"other_field": "baseball"},
             {"other_field": "football"},
         ]
-        self.assertRaises(ValueError, most_common_type, test_data)
+        output_calculated = most_common_type(test_data)
+        self.assertEqual("", output_calculated)
 
 
 class TestFarthest(TestCase):
